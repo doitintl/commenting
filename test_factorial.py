@@ -1,5 +1,5 @@
 from inspect import getmembers, isfunction
-from typing import  Any
+from typing import Any
 
 import pytest
 
@@ -76,6 +76,7 @@ def __expect_exception(func: str, x: Any):
         y = function(x)
         succeed = True
     except (TypeError, ValueError, AssertionError):
-        succeed = False  # Not using pytest.raises in order to gather more info
+        # Not using pytest.raises to gather  info on the value that was returned (but should not have been).
+        succeed = False
 
     assert not succeed, f"Expected a function but {func}({x}) returned {y}"

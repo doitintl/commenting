@@ -20,7 +20,7 @@ def factorial_assertions(n: int) -> int:
     return __iterative_factorial(n)
 
 
-def factorial_with_comment_for_internal_consumptin(n: int) -> int:
+def factorial_with_comment_for_internal_consumption(n: int) -> int:
     """
     This is a simple iterative implementation of factorial.
     The input must be a non-negative integer.
@@ -40,7 +40,7 @@ def factorial_for_public_api(n: int) -> int:
     return __iterative_factorial(n)
 
 
-def factorial_scipi(n: int) -> int:
+def factorial_scypi(n: int) -> int:
     from scipy.special import factorial as f
     return f(n)
 
@@ -52,7 +52,7 @@ def factorial_math(n: int) -> int:
 
 def factorial_doctest(n) -> int:
     """
-    Run doctests with python -m doctest -v factorial.py
+    Run doctests with python -m doctest -v factorial.py or just run this module.
 
     >>> factorial_doctest(3)
     6
@@ -73,3 +73,11 @@ def __iterative_factorial(x):
     for i in range(1, x + 1):
         ret *= i
     return ret
+
+
+if __name__ == "__main__":
+    import doctest
+    # doctest is only in one function. See test_factorial.py for more.
+    doctest.testmod()
+
+

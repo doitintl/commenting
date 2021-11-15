@@ -2,8 +2,8 @@ def fact(p):
     return __iterative_factorial(p)
 
 
-# Naming functions factorial1, factorial2, etc is not a good idea. I do that here simply because
-# these are different versions of the same thing, with various improvements.
+# Naming functions factorial1, factorial2, etc is not a good idea.
+# I do that here because in the article these are different versions of the same thing, with various improvements.
 def factorial_basic(p):
     return __iterative_factorial(p)
 
@@ -50,6 +50,22 @@ def factorial_scipi(n: int) -> int:
 def factorial_math(n: int) -> int:
     from math import factorial as f
     return f(n)
+
+
+def factorial_doctest(n) -> int:
+    """
+    Run this with python -m doctest -v factorial.py
+
+    >>> factorial_doctest(3)
+    6
+    >>> factorial_doctest(0)
+    1
+    >>> factorial_doctest(1.5)
+    Traceback (most recent call last):
+      ...
+    TypeError: 'float' object cannot be interpreted as an integer
+    """
+    return __iterative_factorial(n)
 
 
 def __iterative_factorial(x):

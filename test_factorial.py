@@ -1,13 +1,12 @@
+from inspect import getmembers, isfunction
 from typing import Callable, Any
 
 import pytest
 
-from inspect import getmembers, isfunction
+import factorial
 
-import main
-func_names= [function[0] for function in getmembers(main, isfunction) if function[0].startswith("factorial")]
+func_names = [function[0] for function in getmembers(factorial, isfunction) if function[0].startswith("factorial")]
 
- 
 
 @pytest.mark.parametrize("func", func_names)
 def test_factorial_zero(func):
@@ -52,7 +51,6 @@ def test_factorial_negative_int(func):
     __expect_exception(func, -2)
 
 
-
 @pytest.mark.parametrize("func", func_names)
 def test_factorial_negative_nonint(func):
     """
@@ -67,14 +65,12 @@ def test_factorial_complex(func):
     __expect_exception(func, 1 + 1.0j)
 
 
-
-def __func_by_name(func:str)->Callable:
-    function = getattr(main, func)
+def __func_by_name(func: str) -> Callable:
+    function = getattr(factorial, func)
     return function
 
 
-
-def __expect_exception(func:str, x:Any):
+def __expect_exception(func: str, x: Any):
     y = None
     try:
         y = __func_by_name(func)(x)

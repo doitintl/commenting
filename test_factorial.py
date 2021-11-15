@@ -1,65 +1,85 @@
+from typing import Callable, Any
+
 import pytest
-# Do not delete import
-from main import * #This import is necessary for the dynamic lookup
 
-function_indexes = list(range(1, 7))
+from inspect import getmembers, isfunction
 
+import main
+func_names= [function[0] for function in getmembers(main, isfunction) if function[0].startswith("factorial")]
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_zero(i):
-    assert 1 == func_by_index(i)(0)
+ 
 
-
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_one(i):
-    assert 1 == func_by_index(i)(1)
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_zero(func):
+    assert 1 == __func_by_name(func)(0)
 
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_positive_int(i):
-    assert 120 == func_by_index(i)(5)
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_one(func):
+    assert 1 == __func_by_name(func)(1)
 
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_int_as_float(i):
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_positive_int(func):
+    assert 120 == __func_by_name(func)(5)
+
+
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_int_as_float(func):
     try:
-        assert 6.0 == func_by_index(i)(3.0)
+        assert 6.0 == __func_by_name(func)(3.0)
         # It's OK to return 6.0 as factorial(3.0)
     except (TypeError, AssertionError):
         pass
         # It's Ok  to refuse to process factorial(3.0)
 
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_positive_nonint(i):
-    __expect_exception(i, 1.5)
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_positive_nonint(func):
+    """
+    This fails for some implementations, that return a value here but shouldn't.
+    This is left for illustration that some implementations are flawed.
+    """
+    __expect_exception(func, 1.5)
 
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_negative_int(i):
-    __expect_exception(i, -2)
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_negative_int(func):
+    """
+    This fails for some implementations, that return a value here but shouldn't.
+    This is left for illustration that some implementations are flawed.
+    """
+    __expect_exception(func, -2)
 
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_negative_nonint(i):
-    __expect_exception(i, -1.5)
+
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_negative_nonint(func):
+    """
+    This fails for some implementations, that return a value here but shouldn't.
+    This is left for illustration that some implementations are flawed.
+    """
+    __expect_exception(func, -1.5)
 
 
-@pytest.mark.parametrize("i", function_indexes)
-def test_factorial_complex(i):
-    __expect_exception(i, 1 + 1.0j)
+@pytest.mark.parametrize("func", func_names)
+def test_factorial_complex(func):
+    __expect_exception(func, 1 + 1.0j)
 
 
-def func_by_index(i):
-    return globals()[f"factorial{i}"]
+
+def __func_by_name(func:str)->Callable:
+    function = getattr(main, func)
+    return function
 
 
-def __expect_exception(i, x):
+
+def __expect_exception(func:str, x:Any):
     y = None
     try:
-        y = func_by_index(i)(x)
+        y = __func_by_name(func)(x)
         succeed = True
     except (TypeError, ValueError, AssertionError):
         succeed = False  # Not using pytest.raises in order to gather more info
 
-    assert not succeed, f"factorial{i}({x}) was {y}"
+    assert not succeed, f"factorial{func}({x}) was {y}"

@@ -1,3 +1,5 @@
+# Different implementations, to illustrate improvements.
+
 def fact(p):
     return __iterative_factorial(p)
 
@@ -33,26 +35,26 @@ def factorial_with_comment_for_internal_consumption(n: int) -> int:
 
 def factorial_for_public_api(n: int) -> int:
     """
-    This implements x! (factorial), the product of all numbers from 1 up to and including n.
+    This implements n! (factorial), the product of all numbers from 1 up to and including n.
     :param n A nonnegative integer
     :return The factorial; note that for 0, this returns 1.
     """
     return __iterative_factorial(n)
 
 
-def factorial_scypi(n: int) -> int:
-    from scipy.special import factorial as f
-    return f(n)
+def factorial_scipy(n: int) -> int:
+    from scipy import special
+    return special.factorial(n)
 
 
 def factorial_math(n: int) -> int:
-    from math import factorial as f
-    return f(n)
+    import math
+    return math.factorial(n)
 
 
 def factorial_doctest(n) -> int:
     """
-    Run doctests with python -m doctest -v factorial.py or just run this module.
+    Run the doctests with python -m doctest -v factorial.py or just run this module.
 
     >>> factorial_doctest(3)
     6
@@ -77,7 +79,6 @@ def __iterative_factorial(x):
 
 if __name__ == "__main__":
     import doctest
-    # doctest is only in one function. See test_factorial.py for more.
+
+    # doctest is implemented here only in one function. See test_factorial.py for more.
     doctest.testmod()
-
-

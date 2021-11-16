@@ -1,8 +1,10 @@
 # Let the Computer Check It for You
 
-These are code samples for my article. I suggest reading the article, as these are not too interesting, but if you 
-want to see things live and running, this is the place.
+These are code samples for my article. I suggest reading the article,
+as these are just some basic implementations used to illustrate the article. 
+But if want to see things live and running, this is the place.
 
+## Usage
 Run `test_factorial.py` as Pytest to see multiple unit tests of each implementation;
 you can also run `factorial.py` for a doctest.
 

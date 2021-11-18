@@ -23,9 +23,10 @@ def factorial_assertions(n: int) -> int:
     assert n >= 0, f"{n} is negative and so unsupported."
     return __iterative_factorial(n)
 
-@icontract.require(lambda n:  isinstance(n, int) and n>=0, "n must be a nonnegative integer")
+
+@icontract.require(lambda n: isinstance(n, int) and n >= 0, "n must be a nonnegative integer")
 def factorial_precondition(n: int) -> int:
-    return  __iterative_factorial(n)
+    return __iterative_factorial(n)
 
 
 def factorial_with_comment_for_internal_consumption(n: int) -> int:
@@ -84,7 +85,7 @@ def __iterative_factorial(x):
 
 
 if __name__ == "__main__":
-   import doctest
+    import doctest
 
-   # doctest is implemented here only in one function. See test_factorial.py for more.
-   doctest.testmod()
+    # doctest is implemented here only in one function. See test_factorial.py for more.
+    doctest.testmod()

@@ -7,6 +7,7 @@ import factorial
 
 func_names = [function[0] for function in getmembers(factorial, isfunction) if function[0].startswith("factorial")]
 
+
 @pytest.mark.parametrize("func_name", func_names)
 def test_factorial_zero(func_name):
     function = getattr(factorial, func_name)
@@ -74,7 +75,7 @@ def __expect_exception(func_name: str, x: Any):
         function = getattr(factorial, func_name)
         y = function(x)
         succeeded = True
-    except (TypeError, ValueError, AssertionError) as e: # icontract ViolationError is an AssertionError
+    except (TypeError, ValueError, AssertionError):  # icontract ViolationError is an AssertionError
         # Not using pytest.raises to gather  info on the value that was returned (but should not have been).
         succeeded = False
 
